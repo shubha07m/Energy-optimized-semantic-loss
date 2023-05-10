@@ -1,0 +1,5 @@
+*.jpg
+loss_scratch.ipynb
+rose_images/*
+.DS*
+.ipynb*
