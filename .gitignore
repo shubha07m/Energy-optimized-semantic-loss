@@ -2,4 +2,4 @@
 loss_scratch.ipynb
 rose_images/*
 .DS*
-.ipynb*
+.ipynb_checkpoints/similarity_testing-checkpoint.ipynb
