@@ -13,7 +13,6 @@ from transformers import AutoProcessor, AutoTokenizer, AutoImageProcessor, AutoM
     AutoModelForCausalLM, BlipModel
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
-
 img = Image.open('browndog.jpg')
 print('image and library loaded!')
 print(int(time.time()))
