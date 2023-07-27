@@ -64,7 +64,7 @@ def energy_penalty(encoder=None, include_diffusion_energy=0):
     return Energy_
 
 
-def eosl_loss(pb, pf, k3, semantic=None, enc_type=None, sim_output=None):
+def eosl_loss(pb, pf, k, semantic=None, enc_type=None, sim_output=None):
     Mp_img = None
     Mp_txt = ''
     imgs_path = '/Users/nemo/Desktop/nlp_project/venv/others_na/dnt_delete_diffusers_image/'
@@ -90,8 +90,8 @@ def eosl_loss(pb, pf, k3, semantic=None, enc_type=None, sim_output=None):
 
     if semantic is None:
         L_ch = 1 - (1 - pb_bar) ** l_class
-        eff_energy_penalty = k * (math.log10(energy_penalty()))
-        # eff_energy_penalty = k * (energy_penalty())
+        # eff_energy_penalty = k * (math.log10(energy_penalty()))
+        eff_energy_penalty = k * (energy_penalty())
         N_sm = 0
     else:
         l_sem = countTotalBits(enc_type)
@@ -107,16 +107,14 @@ def eosl_loss(pb, pf, k3, semantic=None, enc_type=None, sim_output=None):
             N_sm = 1 - txt_similarity(Mi, Mp)
 
         if sim_output:
-            eff_energy_penalty = k3 * (math.log10(energy_penalty(enc_type, 1)))
-            # eff_energy_penalty = k * (energy_penalty(enc_type, 1))
+            # eff_energy_penalty = k * (math.log10(energy_penalty(enc_type, 1)))
+            eff_energy_penalty = k * (energy_penalty(enc_type, 1))
         else:
-            eff_energy_penalty = k3 * (math.log10(energy_penalty(enc_type)))
-            # eff_energy_penalty = k * (energy_penalty(enc_type))
+            # eff_energy_penalty = k * (math.log10(energy_penalty(enc_type)))
+            eff_energy_penalty = k * (energy_penalty(enc_type))
 
-    k1 = 1
-    k2 = 1
-    # total_loss = N_sm + L_ch + eff_energy_penalty
-    total_loss = math.exp(k1*N_sm) + math.exp(k2*L_ch) + eff_energy_penalty
+    total_loss = N_sm + L_ch + eff_energy_penalty
+    # total_loss = math.exp(k1*N_sm) + math.exp(k2*L_ch) + eff_energy_penalty
 
     # return enc_type, total_loss, N_sm, L_ch, eff_energy_penalty
     return total_loss
