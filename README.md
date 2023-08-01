@@ -1,4 +1,7 @@
-![alt text](https://github.com/shubha07m/semantic_testing/blob/main/semantic_dogs.jpeg)
+# semantic_testing
+![alt text](https://github.com/shubha07m/semantic_testing/blob/main/dogs.png)
 
-
-In this short project I am doing some experimentation with various image to text and text to image transformer models. The initial goal is to research the effect of model selection on semantic understanding. In similarity_testing I have shown how having and not having a background and selection of different pre-trained transformer model can affect the similarity comparison of two images of a similar object. Two different similarity metrices, namely cosine similarity and structural similarity index measurement (SSIM) have been chosen for this.
+We are experimenting with various transformer models to observe the effect of model selection on semantic
+understanding. We have shown how with or without a background and selection of different pre-trained transformer
+models can affect the similarity comparison. We are benchmarking detailed resource consumption during inference.
+We have also performed similar experiments for textual similarity
