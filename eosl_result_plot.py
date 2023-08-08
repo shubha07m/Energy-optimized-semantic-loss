@@ -1,6 +1,7 @@
 from modified_eosl import eosl_loss
 import pandas as pd
 import matplotlib.pyplot as plt
+from math import log10 as log
 
 
 def get_eosl_stats(plot_graph=0):
@@ -17,25 +18,30 @@ def get_eosl_stats(plot_graph=0):
             i += 1
         # Plot dataset 1 as a line plot
         plt.plot(dfs[0]['pb'], dfs[0]['eosl'], label='vit', marker='x')
+        plt.xscale('log')
 
         # Plot dataset 2 as a line plot
         plt.plot(dfs[1]['pb'], dfs[1]['eosl'], label='gitbase', marker='+')
+        plt.xscale('log')
 
         # Plot dataset 2 as a line plot
         plt.plot(dfs[2]['pb'], dfs[2]['eosl'], label='blipbase', marker='*')
+        plt.xscale('log')
 
         # Plot dataset 2 as a line plot
         plt.plot(dfs[3]['pb'], dfs[3]['eosl'], label='gitlarge', marker='o')
+        plt.xscale('log')
 
         # Plot dataset 2 as a line plot
         plt.plot(dfs[4]['pb'], dfs[4]['eosl'], label='bliplarge', marker='p')
+        plt.xscale('log')
 
         # Add labels, title, and legend
-        legend_font = {'weight': 'bold', 'size': 10}
-        plt.xlabel('Probability of bit error', fontweight='bold', size=12)
+        legend_font = {'weight': 'bold', 'size': 12}
+        plt.xlabel('Probability of Bit Error', fontweight='bold', size=12)
         plt.ylabel('Energy Optimized Sematic Loss', fontweight='bold', size=12)
-        plt.suptitle('EOSL v bit error rate for various encoder', fontweight='bold', size=12)
-        plt.title('K= ' + str(k), fontweight='bold', size=12)
+        plt.title('EOSL v bit error probability for various encoders', fontweight='bold', size=12)
+        # plt.title('K= ' + str(k), fontweight='bold', size=12)
         plt.legend(loc='lower right', frameon=False, prop=legend_font)
 
         # Show the plot
@@ -43,7 +49,8 @@ def get_eosl_stats(plot_graph=0):
 
     else:
         plot_data_all = []
-        pb_list = [.001, .01, .05, .1]
+        # pb_list = [.001, .01, .05, .1]
+        pb_list = [.0002, .001, .005, .025, .125]
         plot_data_all.append(['encoder', 'pb', 'eosl'])
         for enc in enc_list:
             for pb in pb_list:
