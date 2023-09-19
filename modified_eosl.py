@@ -8,7 +8,7 @@ sem_blipbase = 'a small dog running through a field'
 sem_bliplarge = 'there is a dog running in the grass with a frisbee in its mouth'
 
 
-def eosl_loss(enc_type, pb=.001, k=1, sim_type='txt'):
+def eosl_loss(enc_type, pb=.001, lambda_penalty=1, k_sm=1, k_lch=1, k_ec=1, sim_type='txt'):
     Mi_img = 'browndog.jpg'
     Mi_txt = 'a dog running through green grass'
     diff_imgs_path = os.path.join(os.getcwd(), 'dnd_diffusers_results/')
@@ -40,24 +40,10 @@ def eosl_loss(enc_type, pb=.001, k=1, sim_type='txt'):
         N_sm = 1 - img_similarity(Mi_img, Mp_img)
         es = energy_penalty(enc_type, 1)
 
-    EOSL = N_sm + L_ch + ec + k * es
+    EOSL = k_sm * N_sm + k_lch * L_ch + k_ec * ec + lambda_penalty * es
+
     return EOSL
 
 
 if __name__ == '__main__':
     eosl_loss('gitbase')
-
-# comment out below part if creating stat or eosl plots
-print('eosl with semantic communication without text to image energy:')
-print(round(eosl_loss('gitbase'), 3))
-print(round(eosl_loss('vit'), 3))
-print(round(eosl_loss('blipbase'), 3))
-print(round(eosl_loss('gitlarge'), 3))
-print(round(eosl_loss('bliplarge'), 3))
-
-print('eosl with semantic communication including text to image energy:')
-print(round(eosl_loss('gitbase', .001, 1, 'img'), 3))
-print(round(eosl_loss('vit', .001, 1, 'img'), 3))
-print(round(eosl_loss('blipbase', .001, 1, 'img'), 3))
-print(round(eosl_loss('gitlarge', .001, 1, 'img'), 3))
-print(round(eosl_loss('bliplarge', .001, 1, 'img'), 3))

@@ -1,13 +1,12 @@
-from modified_eosl import eosl_loss
+from experimental_eosl import eosl_loss
 import pandas as pd
 import matplotlib.pyplot as plt
-from math import log10 as log
 
 
-def get_eosl_stats(plot_graph=0):
+def get_eosl_stats(plot_graph_option = 0, default_weight=1):
+
     enc_list = ['vit', 'gitbase', 'blipbase', 'gitlarge', 'bliplarge']
-    k = 1
-    if plot_graph:
+    if plot_graph_option:
         i = 0
         dfs = {}
 
@@ -49,17 +48,32 @@ def get_eosl_stats(plot_graph=0):
 
     else:
         plot_data_all = []
-        # pb_list = [.001, .01, .05, .1]
         pb_list = [.0002, .001, .005, .025, .125]
         plot_data_all.append(['encoder', 'pb', 'eosl'])
-        for enc in enc_list:
-            for pb in pb_list:
-                plot_data_all.append([enc, pb, eosl_loss(enc, pb)])
+
+        if default_weight:
+            for enc in enc_list:
+                for pb in pb_list:
+                    plot_data_all.append([enc, pb, eosl_loss(enc, pb)])
+
+        if not default_weight:
+            print('------please enter the weightage values for eosl-------\n')
+            lambda_penalty = float(input('enter the weight for semantic energy loss:\n'))
+            k_sm = float(input('enter the weight for semantic dissimilarity:\n'))
+            k_lch = float(input('enter the weight for chanel loss:\n'))
+            k_ec = float(input('enter the weight for comm. energy loss:\n'))
+
+            for enc in enc_list:
+                for pb in pb_list:
+                    plot_data_all.append([enc, pb, eosl_loss(enc, pb, lambda_penalty, k_sm, k_lch, k_ec)])
 
         plot_data_panda = pd.DataFrame(plot_data_all)
         plot_data_panda.to_csv('eosl_plotdata.csv', index=False, header=False)
 
 
 if __name__ == '__main__':
-    print('add new plotdata or create graph: 1 for graph, 0 for else')
-    get_eosl_stats(int(input()))
+    plot_graph = int(input('add new plotdata or create graph: 1 for graph, 0 for else:\n'))
+    default = 1
+    if not plot_graph:
+        default = int(input('use default weights or customized: 1 for default, 0 for else:\n'))
+    get_eosl_stats(plot_graph, default)
