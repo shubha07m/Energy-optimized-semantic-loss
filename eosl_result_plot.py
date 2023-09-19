@@ -1,4 +1,4 @@
-from experimental_eosl import eosl_loss
+from modified_eosl import eosl_loss
 import pandas as pd
 import matplotlib.pyplot as plt
 
