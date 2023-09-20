@@ -3,8 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-def get_eosl_stats(plot_graph_option = 0, default_weight=1):
-
+def get_eosl_stats(plot_graph_option=0, default_weight=1):
     enc_list = ['vit', 'gitbase', 'blipbase', 'gitlarge', 'bliplarge']
     if plot_graph_option:
         i = 0
@@ -40,7 +39,6 @@ def get_eosl_stats(plot_graph_option = 0, default_weight=1):
         plt.xlabel('Probability of Bit Error', fontweight='bold', size=12)
         plt.ylabel('Energy Optimized Sematic Loss', fontweight='bold', size=12)
         plt.title('EOSL v bit error probability for various encoders', fontweight='bold', size=12)
-        # plt.title('K= ' + str(k), fontweight='bold', size=12)
         plt.legend(loc='lower right', frameon=False, prop=legend_font)
 
         # Show the plot
@@ -48,7 +46,8 @@ def get_eosl_stats(plot_graph_option = 0, default_weight=1):
 
     else:
         plot_data_all = []
-        pb_list = [.0002, .001, .005, .025, .125]
+        # pb_list = [.0002, .001, .005, .025, .125]
+        pb_list = [i / 1000 for i in range(1, 101)]
         plot_data_all.append(['encoder', 'pb', 'eosl'])
 
         if default_weight:
@@ -58,10 +57,10 @@ def get_eosl_stats(plot_graph_option = 0, default_weight=1):
 
         if not default_weight:
             print('------please enter the weightage values for eosl-------\n')
-            lambda_penalty = float(input('enter the weight for semantic energy loss:\n'))
-            k_sm = float(input('enter the weight for semantic dissimilarity:\n'))
-            k_lch = float(input('enter the weight for chanel loss:\n'))
-            k_ec = float(input('enter the weight for comm. energy loss:\n'))
+            lambda_penalty = float(input('enter the weight for semantic energy loss:lambda\n'))
+            k_sm = float(input('enter the weight for semantic dissimilarity:k_sm\n'))
+            k_lch = float(input('enter the weight for chanel loss:k_lch\n'))
+            k_ec = float(input('enter the weight for comm. energy loss:k_ec\n'))
 
             for enc in enc_list:
                 for pb in pb_list:
