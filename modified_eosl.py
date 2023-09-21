@@ -8,7 +8,7 @@ sem_blipbase = 'a small dog running through a field'
 sem_bliplarge = 'there is a dog running in the grass with a frisbee in its mouth'
 
 
-def eosl_loss(enc_type, pb=.001, lambda_penalty=1, k_sm=1, k_lch=1, k_ec=1, sim_type='txt'):
+def eosl_loss(enc_type, pb=.001, lambda_es=1, lambda_sm=1, lambda_lch=1, lambda_ec=1, sim_type='txt'):
     Mi_img = 'browndog.jpg'
     Mi_txt = 'a dog running through green grass'
     diff_imgs_path = os.path.join(os.getcwd(), 'dnd_diffusers_results/')
@@ -40,7 +40,7 @@ def eosl_loss(enc_type, pb=.001, lambda_penalty=1, k_sm=1, k_lch=1, k_ec=1, sim_
         N_sm = 1 - img_similarity(Mi_img, Mp_img)
         es = energy_penalty(enc_type, 1)
 
-    EOSL = k_sm * N_sm + k_lch * L_ch + k_ec * ec + lambda_penalty * es
+    EOSL = lambda_sm * N_sm + lambda_lch * L_ch + lambda_ec * ec + lambda_es * es
 
     return EOSL
 

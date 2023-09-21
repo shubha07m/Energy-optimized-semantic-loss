@@ -57,14 +57,14 @@ def get_eosl_stats(plot_graph_option=0, default_weight=1):
 
         if not default_weight:
             print('------please enter the weightage values for eosl-------\n')
-            lambda_penalty = float(input('enter the weight for semantic energy loss:lambda\n'))
-            k_sm = float(input('enter the weight for semantic dissimilarity:k_sm\n'))
-            k_lch = float(input('enter the weight for chanel loss:k_lch\n'))
-            k_ec = float(input('enter the weight for comm. energy loss:k_ec\n'))
+            lambda_es = float(input('enter the weight for semantic energy loss:lambda_es\n'))
+            lambda_sm = float(input('enter the weight for semantic dissimilarity:lambda_sm\n'))
+            lambda_lch = float(input('enter the weight for chanel loss:lambda_lch\n'))
+            lambda_ec = float(input('enter the weight for comm. energy loss:lambda_ec\n'))
 
             for enc in enc_list:
                 for pb in pb_list:
-                    plot_data_all.append([enc, pb, eosl_loss(enc, pb, lambda_penalty, k_sm, k_lch, k_ec)])
+                    plot_data_all.append([enc, pb, eosl_loss(enc, pb, lambda_es, lambda_sm, lambda_lch, lambda_ec)])
 
         plot_data_panda = pd.DataFrame(plot_data_all)
         plot_data_panda.to_csv('eosl_plotdata.csv', index=False, header=False)
