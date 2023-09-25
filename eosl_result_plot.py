@@ -40,14 +40,16 @@ def get_eosl_stats(plot_graph_option=0, default_weight=1):
         plt.xlabel('Probability of Bit Error', fontweight='bold', size=12)
         plt.ylabel('Energy Optimized Sematic Loss', fontweight='bold', size=12)
         plt.title('EOSL v bit error probability for various encoders', fontweight='bold', size=12)
-        plt.legend(loc='lower right', frameon=False, prop=legend_font)
-
+        plt.legend(loc='best', frameon=False, prop=legend_font)
+        # Below title is for default values of weights, change it manually as per the weights
+        plt.title('(\u03BB_es,\u03BB_sm,\u03BB_lch,\u03BB_ec) = 1', fontweight='bold', size=12)
+        # plt.title('(\u03BB_sm,\u03BB_lch,\u03BB_ec) = 1,  \u03BB_es=4', fontweight='bold', size=12)
         # Show the plot
         plt.show()
 
     else:
         plot_data_all = []
-        ranges = np.arange(-30, -10, .1)
+        ranges = np.arange(-30, -10, 1)
         pb_list = [pow(10, i / 10) for i in ranges]
         plot_data_all.append(['encoder', 'pb', 'eosl'])
 
