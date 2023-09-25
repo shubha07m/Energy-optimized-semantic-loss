@@ -1,6 +1,7 @@
 from modified_eosl import eosl_loss
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def get_eosl_stats(plot_graph_option=0, default_weight=1):
@@ -46,8 +47,8 @@ def get_eosl_stats(plot_graph_option=0, default_weight=1):
 
     else:
         plot_data_all = []
-        # pb_list = [.0002, .001, .005, .025, .125]
-        pb_list = [i / 1000 for i in range(1, 101)]
+        ranges = np.arange(-30, -10, .1)
+        pb_list = [pow(10, i / 10) for i in ranges]
         plot_data_all.append(['encoder', 'pb', 'eosl'])
 
         if default_weight:
