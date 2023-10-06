@@ -1,87 +1,52 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.interpolate import make_interp_spline
 
-plotdata = pd.read_csv('plotdata.csv')
-
-Time = plotdata.loc[:, 'Time']
+plotdata = pd.read_csv('resource_plotdata_encoder.csv')
 
 CPU_Power = plotdata.loc[:, 'CPU_Power']
 GPU_Power = plotdata.loc[:, 'GPU_Power']
 
-# Smoothing : currently OFF
-# smoothing Time_smooth = np.linspace(Time.min(), Time.max(), 700)  # Increase the number of data points for smoother
-# interpolation CPU_Power_smooth = make_interp_spline(Time, CPU_Power)(Time_smooth) GPU_Power_smooth =
-# make_interp_spline(Time, GPU_Power)(Time_smooth) cpu_util_smooth = make_interp_spline(Time, cpu_util)(Time_smooth)
-# System_instructions_retired_smooth = make_interp_spline(Time, System_instructions_retired)(Time_smooth)
-# System_instructions_per_clock_smooth = make_interp_spline(Time, System_instructions_per_clock)(Time_smooth)
-#
-# # Plotting the smoothed lines
-# plt.plot(Time_smooth, CPU_Power_smooth, label='CPU_Power(dBm)')
-# plt.plot(Time_smooth, GPU_Power_smooth, label='GPU_Power(dBm)')
-# plt.plot(Time_smooth, cpu_util_smooth, label='cpu_util(%)')
-# plt.plot(Time_smooth, System_instructions_retired_smooth, label='System_instructions_retired(log10)')
-# plt.plot(Time_smooth, System_instructions_per_clock_smooth, label='System_instructions_per_clock')
+Time = [i for i in range(len(CPU_Power))]
 
-# plt.figure(figsize=(10, 10))
-# plt.subplot(2, 2, 1)
+# Normalize the data for CPU power and GPU power
+# max_CPU_Power = max(CPU_Power)
+# max_GPU_Power = max(GPU_Power)
+# normalized_CPU_Power = [x / max_CPU_Power for x in CPU_Power]
+# normalized_GPU_Power = [x / max_GPU_Power for x in GPU_Power]
 
-# # Plotting the lines
-plt.plot(Time, CPU_Power, label='CPU_Power(W)')
-plt.plot(Time, GPU_Power, label='GPU_Power(W)')
+# Create a new figure and axis for the second y-axis
+fig, ax1 = plt.subplots()
+
+# Plotting the normalized CPU power on the left y-axis
+ax1.plot(Time, CPU_Power, label='CPU_Power', color='tab:orange')
+ax1.set_xlabel('Time (second)', fontweight='bold', size=12)
+ax1.set_ylabel('CPU power(W)', fontweight='bold', size=12, color='tab:orange')
+ax1.tick_params(axis='y')
+
+# Create a twin y-axis on the right side
+ax2 = ax1.twinx()
+
+# Plotting the GPU power on the right y-axis
+ax2.plot(Time, GPU_Power, label='GPU_Power', color='tab:blue')
+ax2.set_ylabel('GPU power(W)', fontweight='bold', size=12, color='tab:blue')
 
 # Adding labels and title
-plt.xlabel('Time(second)', fontweight='bold', size=12)
-plt.ylabel('CPU and GPU power (W)', fontweight='bold', size=12)
 plt.title('Power utilization during inference', fontweight='bold', size=12)
 
-vertical_lines = [27, 34, 39, 57, 62, 67, 72, 75, 79, 88]
+# Adding lines for the encoders
 
+vertical_lines = [19, 27, 32, 70, 75, 90, 95, 101, 106, 114]
 for line in vertical_lines:
     plt.axvline(x=line, color='red', lw=1, linestyle='--')
+#
+# # Adding legends
+lines, labels = ax1.get_legend_handles_labels()
+lines2, labels2 = ax2.get_legend_handles_labels()
+legend = ax1.legend(lines + lines2, labels + labels2, loc='best', frameon=False)
 
-plt.text(30, 20, 'VIT-gpt2', fontsize=12, color='red', rotation='vertical', fontweight='bold')
-plt.text(48, 20, 'GIT large', fontsize=12, color='red', rotation='vertical', fontweight='bold')
-plt.text(63, 15, 'GIT base', fontsize=12, color='red', rotation='vertical', fontweight='bold')
-plt.text(72, 12, 'BLIP base', fontsize=12, color='red', rotation='vertical', fontweight='bold')
-plt.text(82, 22, 'BLIP large', fontsize=12, color='red', rotation='vertical', fontweight='bold')
-
-legend_font = {'weight': 'bold', 'size': 10}
-
-# Adding a legend
-plt.legend(loc='upper left', frameon=False, prop=legend_font)
-
-# cpu_util = plotdata.loc[:, 'cpu_util']
-# plt.subplot(2, 2, 2)
-# plt.plot(Time, cpu_util, color='green',label='cpu_util(%)')
-# # Adding labels and title
-# plt.xlabel('Time(second)')
-# plt.ylabel('CPU utilization (%)')
-# plt.title('CPU utilization during inference')
-# plt.legend(loc='upper left', frameon=False)
-#
-#
-# System_instructions_retired = plotdata.loc[:, 'System_instructions_retired']
-# plt.subplot(2, 2, 3)
-# plt.plot(Time, System_instructions_retired, color='red', label='System_instructions_retired')
-# plt.xlabel('Time(second)')
-# plt.ylabel('System_instructions_retired')
-# plt.title('System instructions retired during inference')
-# plt.legend(loc='upper left', frameon=False)
-#
-#
-# System_instructions_per_clock = plotdata.loc[:, 'System_instructions_per_clock']
-# plt.subplot(2, 2, 4)
-# plt.plot(Time, System_instructions_per_clock, color='cyan', label='System_instructions_per_clock')
-# plt.xlabel('Time(second)')
-# plt.ylabel('System_instructions_per_clock')
-# plt.title('System instructions per clock during inference')
-# plt.legend(loc='upper left', frameon=False)
-#
-#
-# # Adjust layout to prevent overlapping titles and labels
-# plt.tight_layout()
+for text in legend.get_texts():
+    text.set_fontweight('bold')
 
 # Displaying the graph
 plt.show()
