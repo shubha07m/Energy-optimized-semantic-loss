@@ -96,13 +96,14 @@ def calculate_Lch(l, pb, t=2):
 
 
 def energy_penalty(encoder, include_diffusion_energy=0):
-    Es_img_txt = {'vit': 46.943, 'gitbase': 57.110, 'blipbase': 35.677, 'gitlarge': 244.798, 'bliplarge': 94.009}
+    Es_img_txt = {'vit': 50.703, 'gitbase': 197.442, 'blipbase': 60.923, 'gitlarge': 524.719, 'bliplarge': 105.095}
     Es_in = Es_img_txt[encoder]
     Es_in_max = max(Es_img_txt.values())
 
+    # DO NOT USE diffusion energy values now, needs update #
     if include_diffusion_energy:
-        Es_txt_img = {'vit': 4489.725, 'gitbase': 3840.526, 'blipbase': 3903.716, 'gitlarge': 4027.65,
-                      'bliplarge': 3829.253}
+        Es_txt_img = {'vit': 4793.78, 'gitbase': 4177.509, 'blipbase': 4145.009, 'gitlarge': 4162.822,
+                      'bliplarge': 4243.01}
         Es_out = Es_txt_img[encoder]
         Es_out_max = max(Es_txt_img.values())
         Energy_penalty = (Es_in + Es_out) / (Es_in_max + Es_out_max)
