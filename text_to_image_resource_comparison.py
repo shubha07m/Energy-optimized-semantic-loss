@@ -3,67 +3,32 @@ import torch
 import numpy as np
 from diffusers import DiffusionPipeline
 
-### vitgpt ####
-print('vitgpt2 start:')
-print(int(time.time()))
-pipe = DiffusionPipeline.from_pretrained("OFA-Sys/small-stable-diffusion-v0")
-pipe = pipe.to("cpu")
-prompt = "a dog running through a grassy field "
-np.random.seed(123)
-output = pipe(prompt, num_inference_steps=50, guidance_scale=7.5, output_type="pil").images[0]
-print(int(time.time()))
-output.save("vitgpt2_stable_diff.jpg")
-print('\n')
-time.sleep(5)
 
-###### git large ####
-print('git-large start:')
-print(int(time.time()))
-pipe = DiffusionPipeline.from_pretrained("OFA-Sys/small-stable-diffusion-v0")
-pipe = pipe.to("cpu")
-prompt = "a dog running through a field of tall grass"
-np.random.seed(123)
-output = pipe(prompt, num_inference_steps=50, guidance_scale=7.5, output_type="pil").images[0]
-print(int(time.time()))
-output.save("gitlarge_stable_diff.jpg")
-print('\n')
-time.sleep(5)
+def generate_image(prompt, output_filename):
+    print(f'Starting: {prompt}')
+    print(int(time.time()))
 
-###### git base ####
-print('git-base start:')
-print(int(time.time()))
-pipe = DiffusionPipeline.from_pretrained("OFA-Sys/small-stable-diffusion-v0")
-pipe = pipe.to("cpu")
-prompt = "a dog running in the grass"
-np.random.seed(123)
-output = pipe(prompt, num_inference_steps=50, guidance_scale=7.5, output_type="pil").images[0]
-print(int(time.time()))
-output.save("gitbase_stable_diff.jpg")
-print('\n')
-time.sleep(5)
+    pipe = DiffusionPipeline.from_pretrained("OFA-Sys/small-stable-diffusion-v0")
+    pipe = pipe.to("cpu")
 
-###### blip base ####
-print('blip-base start:')
-print(int(time.time()))
-pipe = DiffusionPipeline.from_pretrained("OFA-Sys/small-stable-diffusion-v0")
-pipe = pipe.to("cpu")
-prompt = "a small dog running through a field"
-np.random.seed(123)
-output = pipe(prompt, num_inference_steps=50, guidance_scale=7.5, output_type="pil").images[0]
-print(int(time.time()))
-output.save("blipbase_stable_diff.jpg")
-print('\n')
-time.sleep(5)
+    np.random.seed(123)
+    output = pipe(prompt, num_inference_steps=50, guidance_scale=7, output_type="pil").images[0]
 
-###### blip large ####
-print('blip-large start:')
-print(int(time.time()))
-pipe = DiffusionPipeline.from_pretrained("OFA-Sys/small-stable-diffusion-v0")
-pipe = pipe.to("cpu")
-prompt = "there is a dog running in the grass with a frisbee in its mouth"
-np.random.seed(123)
-output = pipe(prompt, num_inference_steps=50, guidance_scale=7.5, output_type="pil").images[0]
-print(int(time.time()))
-output.save("bliplarge_stable_diff.jpg")
-print('\n')
-time.sleep(5)
+    print(int(time.time()))
+    output.save(output_filename)
+    print('\n')
+    time.sleep(5)
+
+
+# List of prompts and output filenames
+prompts_and_filenames = [
+    ("a large brown dog chasing a brown grassy field", "vitgpt2_stable_diff.jpg"),
+    ("image of dog running across the grass with dog running toward it", "gitlarge_stable_diff.jpg"),
+    ("running dog, a golden retriever in a grassy field.", "gitbase_stable_diff.jpg"),
+    ("a small golden golden retrieve playing on a beautiful, green lawn, as a blurred green background",
+     "blipbase_stable_diff.jpg"),
+    ("aboard a dog running through the grass by a tree line", "bliplarge_stable_diff.jpg"),
+]
+
+for prompt, filename in prompts_and_filenames:
+    generate_image(prompt, filename)
