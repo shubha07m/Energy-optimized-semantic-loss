@@ -42,8 +42,17 @@ def get_eosl_stats(plot_graph_option=0, default_weight=1):
         plt.title('EOSL v bit error probability for various encoders', fontweight='bold', size=12)
         plt.legend(loc='best', frameon=False, prop=legend_font)
         # Below title is for default values of weights, change it manually as per the weights
-        plt.title('(\u03BB_es,\u03BB_sm,\u03BB_lch,\u03BB_ec) = 1', fontweight='bold', size=12)
-        # plt.title('(\u03BB_sm,\u03BB_lch,\u03BB_ec) = 1,  \u03BB_es=4', fontweight='bold', size=12)
+        plt.title(r'$\mathbf{(\lambda_{\mathrm{es}},\ \lambda_{\mathrm{sm}},\ \lambda_{\mathrm{lch}},\ \lambda_{'
+                  r'\mathrm{ec}})}$ = 1', fontsize=12)
+
+        # title for lambda > 1
+
+        # plt.title(r'$\mathbf{(\lambda_{\mathrm{es}},\ \lambda_{\mathrm{sm}},\ \lambda_{\mathrm{lch}})}$ = 1, '
+        #           r'$\mathbf{\lambda_{\mathrm{ec}}}$ = 10', fontsize=12)
+
+        # title for lambda < 1
+        # plt.title(r'$\mathbf{(\lambda_{\mathrm{es}},\ \lambda_{\mathrm{lch}},\ \lambda_{\mathrm{sm}})}$ = 1, '
+        #           r'$\mathbf{\lambda_{\mathrm{ec}}}$ = 0.1', fontsize=12)
         # Show the plot
         plt.show()
 
