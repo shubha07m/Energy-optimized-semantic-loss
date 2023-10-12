@@ -3,6 +3,9 @@
 
 Semantic communication aims to transmit meaningful and effective information, resulting in benefits like reduced latency, bandwidth usage, and higher throughput compared to traditional communication. However, it poses challenges due to the need for metrics to benchmark semantic information loss and energy consumption. This research presents a multi-objective loss function named “Energy-Optimized Semantic Loss” (EOSL), addressing the challenge of balancing semantic information loss and energy consumption. This work paves the way for energy-efficient neural network selection and the development of greener semantic communication architectures.
 
+
+![alt text](https://github.com/shubha07m/Energy-optimized-semantic-loss/blob/main/eosl_all.png)
+
 If you find  this work usefull please cite this as:
 
 @misc{mukherjee2023transformers,
