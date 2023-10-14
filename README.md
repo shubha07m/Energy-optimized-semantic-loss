@@ -15,11 +15,9 @@ Semantic communication aims to transmit meaningful and effective information, re
 
 If you use our work, please cite it as follows:
 
-@misc{mukherjee2023transformers,
-  title={Transformers for Green Semantic Communication: Less Energy, More Semantics}, 
-  author={Shubhabrata Mukherjee and Cory Beard and Sejun Song},
-  year={2023},
-  eprint={2310.07592},
-  archivePrefix={arXiv},
-  primaryClass={cs.LG}
+@article{mukherjee2023transformers,
+  title={Transformers for Green Semantic Communication: Less Energy, More Semantics},
+  author={Mukherjee, Shubhabrata and Beard, Cory and Song, Sejun},
+  journal={arXiv preprint arXiv:2310.07592},
+  year={2023}
 }
